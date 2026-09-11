@@ -9,9 +9,9 @@
 #include <string.h>
 
 #define BUF_SIZE 1024
-#define SHM_KEY 0x1234
+#define SHM_KEY 0x5555
 
-//Escreva um programa que use memória compartilhada para verificar se uma palavra fornecida pelo usuário é palíndrome ou não.
+//Escreva um programa que use memória compartilhada para inverter uma palavra fornecida pelo usuário.
 //Antônio Costa Satiro de Souza 10723636
 
 struct shmseg {
@@ -29,15 +29,13 @@ int fill_buffer(char * bufptr, int size, char palavra[40]) {
    return filled_count;
 }
 
-void identificaPalindromo(char *palavra) {
-   int tamanho = strlen(palavra);
-   for (int i = 0; i < tamanho / 2; i++) {
-      if (palavra[i] != palavra[tamanho - i - 1]) {
-         printf("Palavra '%s' não é palíndromo\n", palavra);
-         return;
-      }
-   }
-   printf("Palavra '%s' é palíndromo\n", palavra);
+void invertePalavra(char *palavra){
+    int tamanho = strlen(palavra);
+    printf("Palavra '%s' invertida: ", palavra);
+    for (int i = tamanho - 1; i > -1 ; i--) {
+        printf("%c", palavra[i]);
+    }
+    printf("\n");
 }
 
 int main(int argc, char *argv[]) {
@@ -54,7 +52,6 @@ int main(int argc, char *argv[]) {
       return 1;
    }
    
-   
    while (shmp->complete != 1) {
       printf("segment contains : \n\"%s\"\n", shmp->buf);
       if (shmp->cnt == -1) {
@@ -65,7 +62,7 @@ int main(int argc, char *argv[]) {
       sleep(3);
    }
 
-   identificaPalindromo(shmp->buf);
+   invertePalavra(shmp->buf);
 
    printf("Reading Process: Reading Done, Detaching Shared Memory\n");
    if (shmdt(shmp) == -1) {

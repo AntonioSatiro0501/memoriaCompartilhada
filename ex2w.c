@@ -9,9 +9,9 @@
 #include <string.h>
 
 #define BUF_SIZE 1024
-#define SHM_KEY 0x1234
+#define SHM_KEY 0x5555
 
-//Escreva um programa que use memória compartilhada para verificar se uma palavra fornecida pelo usuário é palíndrome ou não.
+//Escreva um programa que use memória compartilhada para inverter uma palavra fornecida pelo usuário.
 //Antônio Costa Satiro de Souza 10723636
 
 struct shmseg {
@@ -43,7 +43,7 @@ int main(int argc, char *argv[]) {
       perror("Shared memory");
       return 1;
    }
-   
+     
    shmp = shmat(shmid, NULL, 0);
    if (shmp == (void *) -1) {
       perror("Shared memory attach");
